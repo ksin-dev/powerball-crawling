@@ -18,7 +18,7 @@ export let env: Env = {
   output: '',
   id: '',
   password: '',
-  headless: false,
+  headless: true,
   retry: 10
 }
 
@@ -43,7 +43,7 @@ const promise = yargs(hideBin(process.argv))
   })
   .option('headless', {
     type: 'boolean',
-    default:false
+    default:true
   })
   .option('retry', {
     type: 'number',
