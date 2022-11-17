@@ -25,7 +25,8 @@ async function getData(frame: puppeteer.Page, date: Date) {
   const today = format(date, 'yyyy,MM,dd');
   const res = await tbody.$$eval('tr', trs => {
     return trs.map((tr) => {
-      const columns = tr.querySelectorAll('td')
+      const columns = tr.querySelectorAll('td');
+      if(columns.length < 7) return "";
       //회차
       const cnt = columns[0].querySelectorAll('.numberText');
       const time = columns[1].innerText.split(':');
@@ -36,7 +37,7 @@ async function getData(frame: puppeteer.Page, date: Date) {
 
       
       return [time[0], time[1], round1.slice(0, round1.length - 1), round2.slice(0, round2.length - 1), ...results, special].join(',');
-    })
+    }).filter((v)=>!!v.length);
   });
 
   const csvString =  res.reduce((prev, next) => {
